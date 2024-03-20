@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -35,6 +36,16 @@ return new class extends Migration
             $table->longText('payload');
             $table->integer('last_activity')->index();
         });
+
+        // Create test user
+        if (env('APP_ENV') === 'local') {
+            DB::table('users')->insert([
+                'email' => 'testy@test.com',
+                'name' => 'Testy McTestface',
+                'password' => \Illuminate\Support\Facades\Hash::make('test1234'),
+                'email_verified_at' => now(),
+            ]);
+        }
     }
 
     /**
