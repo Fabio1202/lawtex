@@ -22,7 +22,7 @@ Route::middleware('auth', 'verified')->group(function () {
 //        Route::get('/{project}', [App\Http\Controllers\ProjectController::class, 'show'])->name('projects.show');
 //        Route::get('/{project}/edit', [App\Http\Controllers\ProjectController::class, 'edit'])->name('projects.edit');
 //        Route::patch('/{project}', [App\Http\Controllers\ProjectController::class, 'update'])->name('projects.update');
-//        Route::delete('/{project}', [App\Http\Controllers\ProjectController::class, 'destroy'])->name('projects.destroy');
+        Route::delete('/{project}', [App\Http\Controllers\ProjectController::class, 'destroy'])->name('projects.destroy');
     });
 });
 
