@@ -56,4 +56,13 @@ class ProjectController extends Controller
 
         return redirect(route('projects.index'));
     }
+
+    public function show(Project $project)
+    {
+        Gate::authorize('view', $project);
+
+        return view('projects.show', [
+            'project' => $project,
+        ]);
+    }
 }
