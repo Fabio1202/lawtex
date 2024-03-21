@@ -18,7 +18,7 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::prefix('projects')->group(function () {
         Route::get('/', [App\Http\Controllers\ProjectController::class, 'index'])->name('projects.index');
 //        Route::get('/create', [App\Http\Controllers\ProjectController::class, 'create'])->name('projects.create');
-//        Route::post('/', [App\Http\Controllers\ProjectController::class, 'store'])->name('projects.store');
+        Route::post('/', [App\Http\Controllers\ProjectController::class, 'store'])->name('projects.store');
 //        Route::get('/{project}', [App\Http\Controllers\ProjectController::class, 'show'])->name('projects.show');
 //        Route::get('/{project}/edit', [App\Http\Controllers\ProjectController::class, 'edit'])->name('projects.edit');
 //        Route::patch('/{project}', [App\Http\Controllers\ProjectController::class, 'update'])->name('projects.update');

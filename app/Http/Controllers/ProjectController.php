@@ -24,4 +24,21 @@ class ProjectController extends Controller
 
         return redirect(route('projects.index'));
     }
+
+    public function store()
+    {
+        Gate::authorize('create', Project::class);
+
+        // Validate the request
+        request()->validate([
+            'name' => 'required',
+        ]);
+
+        // Create a new project
+        $project = new Project();
+        $project->name = request('name');
+        request()->user()->projects()->save($project);
+
+        return redirect(route('projects.index'));
+    }
 }

@@ -4,7 +4,7 @@
             Projects
         </h2>
     </x-slot>
-    <span x-data="{ showDelete: false, item: null, show(selItem) {this.item = selItem; this.showDelete = true}}">
+    <span x-data="{ showDelete: false, showCreate:false, item: null, showDeletePopUp(selItem) {this.item = selItem; this.showDelete = true}}">
 
         <div class="fixed w-screen h-screen top-0 left-0 flex justify-center items-center text-black dark:text-white" x-show.important="showDelete" x-cloak>
             <span class="bg-gray-900 opacity-40 absolute w-full h-full top-0 left-0" @click="showDelete = false;"></span>
@@ -25,13 +25,31 @@
             </div>
         </div>
 
+        <div class="fixed w-screen h-screen top-0 left-0 flex justify-center items-center text-black dark:text-white" x-show.important="showCreate" x-cloak>
+            <span class="bg-gray-900 opacity-40 absolute w-full h-full top-0 left-0" @click="showCreate = false;"></span>
+            <form class="justify-around sm:justify-start w-full sm:w-auto h-full sm:h-auto rounded-md bg-gray-100 shadow-lg dark:bg-gray-700 p-10 flex items-center flex-col gap-1 z-10"  method="POST" action="">
+                <span class="flex flex-col items-center ">
+                    <h1 class=" text-center text-4xl font-bold px-16">New Project</h1>
+                    <label for="name" class="text-left w-full text-md mt-5">Project Name</label>
+                    <input name="name" required type="text" class="w-full h-10 rounded-md border-none bg-white dark:bg-gray-800" placeholder="Pied Piper OS"/>
+                </span>
+                <div class="mt-7 flex flex-col gap-4 sm:flex-row justify-between w-full">
+                    @csrf
+                    <button type="button" @click="showCreate= false" before="{{ trans('Cancel') }}"
+                            class="before:content-[attr(before)] bg-white dark:bg-gray-600 rounded-md px-5 py-2 hover:bg-gray-200 hover:dark:bg-gray-500 w-full"></button>
+                    <button type="submit" before="{{ trans('Create') }}"
+                            class="before:content-[attr(before)] text-white bg-blue-500 rounded-md px-5 py-2 hover:bg-blue-400 w-full"></button>
+                </div>
+            </form>
+        </div>
+
         <div class="py-12 w-full px-2 sm:px-8">
             <div class="w-full px-8 py-8 bg-white dark:bg-gray-800 text-black dark:text-white rounded-md">
                 <div class="flex-col gap-4 sm:flex-row w-full flex justify-between items-center">
                     <h1 class="text-2xl font-bold">All your projects</h1>
                     <div>
                         <a>
-                            <button before="{{ trans('New Project') }}"
+                            <button @click="showCreate = true" before="{{ trans('New Project') }}"
                                     class="text-white before:content-[attr(before)] before:mr-2 bg-blue-900 rounded-md px-5 py-2 hover:bg-blue-800">
                                 <i class="fa-regular fa-pen-to-square"></i></button>
                         </a>
@@ -49,7 +67,7 @@
                             <button
                                 class="text-white before:content-['Edit'] before:mr-2 bg-blue-500 rounded-md px-2 py-1 hover:bg-blue-400"><i
                                     class="fa-regular fa-pen-to-square"></i></button>
-                            <button @click="show({{ $project }})"
+                            <button @click="showDeletePopUp({{ $project }})"
                                     class="text-white before:content-['Delete'] before:mr-2 bg-red-500 rounded-md px-2 py-1 hover:bg-red-400"><i
                                     class="fa-regular fa-trash-can"></i></button>
                         </span>
