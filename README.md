@@ -1,9 +1,8 @@
-<span style="display:flex;width: 50%;margin-left: 50%; transform: translate(-50%)">
+<p align="center">
+<img src="./public/images/logo-no-background.svg#gh-dark-mode-only" width=500/>
+<img src="./public/images/logo-black.svg#gh-light-mode-only" width=500/>
+</p>
 
-![Fancy logo](./public/images/logo-no-background.svg#gh-dark-mode-only)
-![Fancy logo](./public/images/logo-black.svg#gh-light-mode-only)
-
-</span>
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
