@@ -15,4 +15,10 @@ class Project extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    // Has Many Laws
+    public function laws(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Law::class);
+    }
 }

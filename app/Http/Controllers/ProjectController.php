@@ -41,4 +41,19 @@ class ProjectController extends Controller
 
         return redirect(route('projects.index'));
     }
+
+    public function rename(Project $project)
+    {
+        Gate::authorize('update', $project);
+
+        // Validate the request
+        request()->validate([
+            'name' => 'required',
+        ]);
+
+        $project->name = request('name');
+        $project->save();
+
+        return redirect(route('projects.index'));
+    }
 }

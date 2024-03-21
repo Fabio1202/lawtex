@@ -11,6 +11,19 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
+        <!-- Favicon -->
+        <link rel="icon" href="{{ asset('images/lawtex-favicon-black.svg') }}" type="image/x-icon"/>
+
+        <script>
+            const setFavicon = () => {
+                const favicon = document.querySelector('link[rel="icon"]');
+                favicon.href = (window.matchMedia('(prefers-color-scheme: dark)').matches)
+                    ? '{{ asset('images/lawtex-favicon-white.svg') }}'
+                    : '{{ asset('images/lawtex-favicon-black.svg') }}';
+            };
+            setFavicon();
+        </script>
+
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
