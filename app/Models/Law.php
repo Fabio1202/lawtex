@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\OrderedBySlugScope;
 use App\Parsers\Base\ParsedInformation;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+#[ScopedBy([OrderedBySlugScope::class])]
 class Law extends Model
 {
     use HasFactory;

@@ -45,7 +45,7 @@
                     {{--<input name="name" required type="text" class="w-1/3 h-10 rounded-md border-none bg-gray-100 dark:bg-gray-800" placeholder="Pied Piper OS"/>--}}
                     <div class="w-full xs:w-auto flex flex-col xs:flex-row gap-3">
                         <button @click="showCreate = true" before="{{ trans('Add Law') }}"
-                                class="text-white before:content-[attr(before)] before:mr-2 bg-blue-900 rounded-md px-5 py-2 hover:bg-blue-800">
+                                class="whitespace-nowrap text-white before:content-[attr(before)] before:mr-2 bg-blue-900 rounded-md px-5 py-2 hover:bg-blue-800">
                             <i class="fa-regular fa-plus"></i></button>
                         {{--<button before="{{ trans('Export') }}"
                                 class="text-white before:content-[attr(before)] before:mr-2 bg-blue-900 rounded-md px-5 py-2 hover:bg-blue-800">
@@ -64,7 +64,7 @@
                         </span>
                     @else
                         @foreach($project->lawBooks() as $lawBooks)
-                            <h1 class="text-xl font-bold {{ $loop->first ? '' : 'mt-5' }}">{{ $lawBooks->name }}</h1>
+                            <h1 class="text-xl font-bold {{ $loop->first ? '' : 'mt-5' }}">{{ $lawBooks->name }} ({{ $lawBooks->short }})</h1>
                             @foreach($lawBooks->laws->where('project_id', $project->id) as $law)
                                 <span
                                     class="z-10 cursor-pointer flex-col gap-3 md:flex-row px-3 items-center justify-between flex w-full py-5 border-gray-200 dark:border-gray-700 transition-all hover:bg-gray-100 hover:dark:bg-gray-700 {{ ($loop?->last ?? false) ? "" : "border-b-2" }}">

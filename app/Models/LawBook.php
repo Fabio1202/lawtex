@@ -9,6 +9,8 @@ class LawBook extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     // Has Many Laws
     public function laws(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
