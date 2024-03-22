@@ -37,6 +37,7 @@ class GesetzeImInternetParser implements ParserInterface
         $prefixSlug = explode(' ', $crawler->filter('span.jnenbez')->text());
         $parsedInformation->lawPrefix = $prefixSlug[0];
         $parsedInformation->lawSlug = $prefixSlug[1];
+        $parsedInformation->lawUrl = $crawler->getUri();
 
         $parsedInformation->lawTitle = $crawler->filter('span.jnentitel')->text();
         $matches = [];

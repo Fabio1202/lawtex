@@ -69,6 +69,6 @@ class LawParser
     {
         $response = $this->client->request('GET', $url);
 
-        return new Crawler($response->getBody());
+        return new Crawler($response->getBody(), $url);
     }
 }

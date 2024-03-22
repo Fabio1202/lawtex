@@ -28,7 +28,7 @@
         <div class="transition-all fixed w-screen h-screen top-0 left-0 flex justify-center items-center text-black dark:text-white" x-show="showCreate" x-cloak>
             <span class="bg-gray-900 opacity-40 absolute w-full h-full top-0 left-0" @click="showCreate = false;"></span>
             <form class="justify-around sm:justify-start w-full sm:w-auto h-full sm:h-auto rounded-md bg-gray-100 shadow-lg dark:bg-gray-700 p-10 flex items-center flex-col gap-1 z-10"  method="POST" action="">
-                <span class="flex flex-col items-center ">
+                <span class="flex flex-col items-center w-full">
                     <h1 class=" text-center text-4xl font-bold sm:px-16">New Project</h1>
                     <label for="name" class="text-left w-full text-md mt-5">Project Name</label>
                     <input name="name" required type="text" class="w-full h-10 rounded-md border-none bg-white dark:bg-gray-800" placeholder="Pied Piper OS"/>
@@ -82,7 +82,7 @@
                                 <h1 class="text-lg font-bold">{{ $project->name }}</h1>
                                 <h2 class="text-sm"># of Laws: {{ $project->laws->count() }}</h2>
                             </span>
-                            <span class="inline-block z-20">
+                            <span class="inline-block">
                                 {{--  <button @click="showDeletePopUp({{ $project }})"
                                         class="text-white before:content-['Share'] before:mr-2 bg-yellow-500 rounded-md px-2 py-1 hover:bg-yellow-400"><i class="fa-solid fa-share-from-square"></i></button>
                                 --}}

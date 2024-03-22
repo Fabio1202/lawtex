@@ -15,14 +15,17 @@ class LawBookFactory extends Factory
             [
                 'name' => 'Bürgerliches Gesetzbuch',
                 'slug' => 'bgb',
+                'short' => 'BGB',
             ],
             [
                 'name' => 'Strafgesetzbuch',
                 'slug' => 'stgb',
+                'short' => 'StGB',
             ],
             [
                 'name' => 'Handelsgesetzbuch',
                 'slug' => 'hgb',
+                'short' => 'HGB',
             ],
         ];
 
