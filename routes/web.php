@@ -27,4 +27,10 @@ Route::middleware('auth', 'verified')->group(function () {
     });
 });
 
+Route::get('test', function () {
+    $law = \App\Models\Law::first();
+    dump(LawParser::fullParse($law));
+    dd(LawParser::parseInformation('https://www.gesetze-im-internet.de/bgb/__823.html'));
+})->name('test');
+
 require __DIR__.'/auth.php';

@@ -22,7 +22,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('law_book_id')->constrained()->onDelete('cascade');
             $table->string('name');
-            $table->string('slug')->unique();
+            $table->string('slug');
+            //URL to the law
+            $table->string('url');
             // Belong to one project
             $table->foreignUuid('project_id')->constrained()->onDelete('cascade');
             $table->timestamps();

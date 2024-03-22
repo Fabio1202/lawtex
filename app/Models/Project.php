@@ -21,4 +21,10 @@ class Project extends Model
     {
         return $this->hasMany(Law::class);
     }
+
+    public function lawBooks(): \Illuminate\Support\Collection
+    {
+        // No direct connection, only through laws
+        return $this->laws->pluck('lawBook')->unique();
+    }
 }
