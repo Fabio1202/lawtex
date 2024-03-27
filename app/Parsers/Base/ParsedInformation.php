@@ -7,17 +7,36 @@ use App\Models\LawBook;
 
 class ParsedInformation
 {
-    public string $lawBookTitle;
+    protected string $lawBookTitle;
 
-    public string $lawBookSlug;
+    protected string $lawBookSlug;
 
-    public string $lawSlug;
+    protected string $lawSlug;
 
-    public string $lawPrefix;
+    protected string $lawPrefix;
 
-    public string $lawTitle;
+    protected string $lawTitle;
 
-    public string $lawUrl;
+    protected string $lawUrl;
+
+    /**
+     * @param string $lawBookTitle
+     * @param string $lawBookSlug
+     * @param string $lawSlug
+     * @param string $lawPrefix
+     * @param string $lawTitle
+     * @param string $lawUrl
+     */
+    public function __construct(string $lawBookTitle, string $lawBookSlug, string $lawSlug, string $lawPrefix, string $lawTitle, string $lawUrl)
+    {
+        $this->lawBookTitle = $lawBookTitle;
+        $this->lawBookSlug = $lawBookSlug;
+        $this->lawSlug = $lawSlug;
+        $this->lawPrefix = $lawPrefix;
+        $this->lawTitle = $lawTitle;
+        $this->lawUrl = $lawUrl;
+    }
+
 
     public function toLaw(): Law
     {
@@ -26,9 +45,11 @@ class ParsedInformation
         $law->slug = $this->lawSlug;
         $law->url = $this->lawUrl;
         $lawBook = LawBook::firstOrCreate([
-            'name' => $this->lawBookTitle,
             'slug' => strtolower($this->lawBookSlug),
+        ], [
             'short' => $this->lawBookSlug,
+            'prefix' => $this->lawPrefix,
+            'name' => $this->lawBookTitle,
         ]);
         $law->lawBook()->associate($lawBook);
 

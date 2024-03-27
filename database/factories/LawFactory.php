@@ -18,16 +18,25 @@ class LawFactory extends Factory
                 'name' => 'Bürgerliches Gesetzbuch',
                 'slug' => 'bgb',
                 'short' => 'BGB',
+                'prefix' => '§',
             ],
             [
                 'name' => 'Strafgesetzbuch',
                 'slug' => 'stgb',
                 'short' => 'StGB',
+                'prefix' => '§',
             ],
             [
                 'name' => 'Handelsgesetzbuch',
                 'slug' => 'hgb',
                 'short' => 'HGB',
+                'prefix' => '§',
+            ],
+            [
+                'name' => 'Grundgesetz',
+                'slug' => 'gg',
+                'short' => 'GG',
+                'prefix' => 'Art.',
             ],
         ];
 

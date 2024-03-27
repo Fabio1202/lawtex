@@ -29,10 +29,14 @@ Route::middleware('auth', 'verified')->group(function () {
     });
 });
 
-Route::get('test', function () {
-    $law = \App\Models\Law::first();
-    dump(LawParser::fullParse($law));
-    dd(LawParser::parseInformation('https://www.gesetze-im-internet.de/bgb/__823.html'));
-})->name('test');
+if (app()->environment('local')) {
+    Route::get('test', function () {
+        $law = \App\Models\Law::first();
+        $law->url = 'https://www.gesetze-im-internet.de/bgb/__311.html#:~:text=§%20311%20Rechtsgeschäftliche%20und%20rechtsgeschäftsähnliche,das%20Gesetz%20ein%20anderes%20vorschreibt.';
+        $parser = new \App\Parsers\Base\LawParser();
+        dump($parser->fullParse($law));
+        dd($parser->parseInformation($law->url));
+    })->name('test');
+}
 
 require __DIR__.'/auth.php';

@@ -24,7 +24,16 @@ class GesetzeImInternetParser implements ParserInterface
         $parsedLaw->paragraphs = [];
 
         $crawler->filter('div.jurAbsatz')->each(function (Crawler $node) use ($parsedLaw) {
-            $parsedLaw->paragraphs[] = preg_replace('/^\([0-9]*\) /', '', $node->text());
+            $txt = $node->innerText();
+            dump($node->html());
+            $filteredDl = $node->filter('dl');
+            if ($filteredDl->count() > 0) {
+                $filteredDl->filter('dt')->each(function (Crawler $dl) use (&$txt) {
+                    $txt .= '<br>'.$dl->text();
+                    $txt .= ' '.$dl->nextAll()->text();
+                });
+            }
+            $parsedLaw->paragraphs[] = preg_replace('/^\([0-9]*\) /', '', $txt);
         });
 
         return $parsedLaw;
@@ -32,19 +41,23 @@ class GesetzeImInternetParser implements ParserInterface
 
     public function parseInformation(Crawler $crawler): ParsedInformation
     {
-        $parsedInformation = new ParsedInformation();
-
         $prefixSlug = explode(' ', $crawler->filter('span.jnenbez')->text());
-        $parsedInformation->lawPrefix = $prefixSlug[0];
-        $parsedInformation->lawSlug = $prefixSlug[1];
-        $parsedInformation->lawUrl = $crawler->getUri();
+        $lawPrefix = $prefixSlug[0];
+        $lawSlug = $prefixSlug[1];
+        $lawUrl = $crawler->getUri();
 
-        $parsedInformation->lawTitle = $crawler->filter('span.jnentitel')->text();
+        $lawTitle = $crawler->filter('span.jnentitel')->text();
         $matches = [];
-        preg_match("/\([0-9a-zA-Z]*\)/", $crawler->filter('div.jnheader h1')->text(), $matches);
-        $parsedInformation->lawBookSlug = str_replace(['(', ')'], '', $matches[0]);
-        $parsedInformation->lawBookTitle = preg_replace('/ \([0-9a-zA-Z]*\).*/', '', $crawler->filter('div.jnheader h1')->text());
+        preg_match("/\([0-9a-zA-Z]*\)/", $crawler->filter('div.jnheader h1')->innerText(), $matches);
+        if ($matches === []) {
+            // Get first query parameter
+            $lawBookSlug = explode('/', $crawler->getUri())[3];
+            $lawBookTitle = $crawler->filter('div.jnheader h1')->innerText();
+        } else {
+            $lawBookSlug = str_replace(['(', ')'], '', $matches[0]);
+            $lawBookTitle = preg_replace('/ \([0-9a-zA-Z]*\).*/', '', $crawler->filter('div.jnheader h1')->text());
+        }
 
-        return $parsedInformation;
+        return new ParsedInformation($lawBookTitle, $lawBookSlug, $lawSlug, $lawPrefix, $lawTitle, $lawUrl);
     }
 }

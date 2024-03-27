@@ -69,7 +69,7 @@
                                 <span
                                     class="z-10 cursor-pointer flex-col gap-3 md:flex-row px-3 items-center justify-between flex w-full py-5 border-gray-200 dark:border-gray-700 transition-all hover:bg-gray-100 hover:dark:bg-gray-700 {{ ($loop?->last ?? false) ? "" : "border-b-2" }}">
                                 <span class="flex content-around flex-col">
-                                    <h1 class="text-lg">§ {{ $law->slug }} {{$law->name}}</h1>
+                                    <h1 class="text-lg">{{ $law->prefix }} {{ $law->slug }} {{$law->name}}</h1>
                                 </span>
                                 <span class="inline-block">
                                     <a target="_blank" href="{{ $law->url }}"><button

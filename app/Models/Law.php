@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Models\Scopes\OrderedBySlugScope;
-use App\Parsers\Base\ParsedInformation;
 use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -22,5 +21,19 @@ class Law extends Model
     public function project(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Project::class);
+    }
+
+    public function prefix(): string
+    {
+        return $this->lawBook->prefix;
+    }
+
+    public function __get($key)
+    {
+        if ($key === 'prefix') {
+            return $this->prefix();
+        }
+
+        return parent::__get($key);
     }
 }
