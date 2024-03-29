@@ -3,60 +3,70 @@
 <img src="./public/images/logo-black.svg#gh-light-mode-only" width=500/>
 </p>
 
-## About Laravel
+# lawtex
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Description
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+`lawtex` is a PHP application that allows to manage law texts for an latex document. Multiple projects can contain different laws. The parsed file can be downloaded or embedded, e.g. in Overleaf, via a magic link.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Install local development environment
 
-## Learning Laravel
+1. Clone the repository:
+    ```
+    git clone https://github.com/Fabio1202/lawtex.git
+    ```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+2. Navigate to the project directory:
+    ```
+    cd lawtex
+    ```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+3. Install PHP dependencies, including Laravel Sail:
+    ```
+    composer install
+    ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+4. Run Laravel Sail's up command. This command starts all of your Sail's containers:
+    ```
+    ./vendor/bin/sail up
+    ```
 
-## Laravel Sponsors
+5. Install JavaScript dependencies:
+    ```
+    ./vendor/bin/sail npm install
+    ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+6. Copy the `.env.example` file to create your own environment configuration:
+    ```
+    cp .env.example .env
+    ```
 
-### Premium Partners
+7. The `.env` file should already be configured to work with Laravel Sail. Update the `.env` file with your database and other configuration details if necessary.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+
+8. Generate an application key:
+    ```
+    ./vendor/bin/sail artisan key:generate
+    ```
+
+9. Run database migrations:
+    ```
+    ./vendor/bin/sail artisan migrate
+    ```
+   
+10. Start vite to serve the frontend:
+    ```
+    ./vendor/bin/sail npm run dev
+    ```
+
+## Usage
+
+To use the application, run the following command:
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Contributions are welcome. Please open an issue or submit a pull request on GitHub.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is licensed under the MIT License.
