@@ -25,6 +25,8 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::delete('/{project}', [App\Http\Controllers\ProjectController::class, 'destroy'])->name('projects.destroy');
         Route::patch('/{project}/rename', [App\Http\Controllers\ProjectController::class, 'rename'])->name('projects.rename');
 
+        Route::get('/{project}/latex.tex', [App\Http\Controllers\ProjectController::class, 'latex'])->name('projects.latex');
+
         Route::post('/{project}/laws', [App\Http\Controllers\LawController::class, 'store'])->name('laws.store');
     });
 });
@@ -34,7 +36,10 @@ if (app()->environment('local')) {
         $law = \App\Models\Law::first();
         $law->url = 'https://www.gesetze-im-internet.de/bgb/__311.html#:~:text=§%20311%20Rechtsgeschäftliche%20und%20rechtsgeschäftsähnliche,das%20Gesetz%20ein%20anderes%20vorschreibt.';
         $parser = new \App\Parsers\Base\LawParser();
-        dump($parser->fullParse($law));
+        $parsed = $parser->fullParse($law);
+        dump($parsed);
+        dump($parsed->toLatex());
+        dump($law->project->toLatex());
         dd($parser->parseInformation($law->url));
     })->name('test');
 }

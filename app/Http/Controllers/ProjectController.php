@@ -65,4 +65,14 @@ class ProjectController extends Controller
             'project' => $project,
         ]);
     }
+
+    public function latex(Project $project)
+    {
+        Gate::authorize('view', $project);
+
+        return response($project->toLatex(), 200, [
+            'Content-Type' => 'text/plain',
+            'Content-Disposition' => 'attachment; filename="' . $project->name . '.tex"',
+        ]);
+    }
 }

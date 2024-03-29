@@ -61,4 +61,15 @@ class EmailVerificationTest extends TestCase
 
         $this->assertFalse($user->fresh()->hasVerifiedEmail());
     }
+
+    public function test_redirect_when_verified_email(): void
+    {
+        $user = User::factory()->create([
+            'email_verified_at' => now(),
+        ]);
+
+        $response = $this->actingAs($user)->get('/verify-email');
+
+        $response->assertRedirect(route('projects.index', absolute: false));
+    }
 }

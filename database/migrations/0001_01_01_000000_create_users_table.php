@@ -5,6 +5,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 return new class extends Migration
 {
@@ -39,11 +40,28 @@ return new class extends Migration
         });
 
         // Create test user
-        if (env('APP_ENV') === 'local') {
+        if (app()->environment('local')) {
             User::create([
                 'email' => 'testy@test.com',
                 'name' => 'Testy McTestface',
                 'password' => \Illuminate\Support\Facades\Hash::make('test1234'),
+                'email_verified_at' => now(),
+            ]);
+        }
+
+        // Create admin user for production
+        if (app()->environment('production')) {
+
+            // Create random password if not set and log it
+            if(! $password = config('auth.admin_password')) {
+                $password = Str::random(32);
+                echo "Admin password: $password\n";
+            }
+
+            User::create([
+                'email' => config('auth.admin_email'),
+                'name' => 'Admin',
+                'password' => $password,
                 'email_verified_at' => now(),
             ]);
         }

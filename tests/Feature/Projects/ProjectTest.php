@@ -215,6 +215,7 @@ class ProjectTest extends TestCase
         $lawBook->name = 'Test Law Book';
         $lawBook->slug = 'hgb';
         $lawBook->short = 'HGB';
+        $lawBook->prefix = '§';
 
         $lawBook->save();
 

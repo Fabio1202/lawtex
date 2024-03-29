@@ -12,20 +12,20 @@ class GesetzeImInternetParser implements ParserInterface
 {
     public function fullParse(Law $law, Crawler $crawler): ParsedLaw
     {
-        $parsedLaw = new ParsedLaw();
-        $parsedLaw->lawBookSlug = $law->lawBook->slug;
-        $parsedLaw->lawBookTitle = $law->lawBook->name;
+        $lawBookSlug = $law->lawBook->slug;
+        $lawBookShort = $law->lawBook->short;
+        $lawBookTitle = $law->lawBook->name;
+        $prefix = $law->lawBook->prefix;
 
-        $parsedLaw->title = $law->name;
-        $parsedLaw->section = $law->slug;
+        $title = $law->name;
+        $section = $law->slug;
 
-        $parsedLaw->url = $law->url;
+        $url = $law->url;
 
-        $parsedLaw->paragraphs = [];
+        $paragraphs = [];
 
-        $crawler->filter('div.jurAbsatz')->each(function (Crawler $node) use ($parsedLaw) {
+        $crawler->filter('div.jurAbsatz')->each(function (Crawler $node) use (&$paragraphs) {
             $txt = $node->innerText();
-            dump($node->html());
             $filteredDl = $node->filter('dl');
             if ($filteredDl->count() > 0) {
                 $filteredDl->filter('dt')->each(function (Crawler $dl) use (&$txt) {
@@ -33,10 +33,10 @@ class GesetzeImInternetParser implements ParserInterface
                     $txt .= ' '.$dl->nextAll()->text();
                 });
             }
-            $parsedLaw->paragraphs[] = preg_replace('/^\([0-9]*\) /', '', $txt);
+            $paragraphs[] = preg_replace('/^\([0-9]*\) /', '', $txt);
         });
 
-        return $parsedLaw;
+        return new ParsedLaw($section, $title, $paragraphs, $url, $lawBookSlug, $lawBookShort,$lawBookTitle, $prefix);
     }
 
     public function parseInformation(Crawler $crawler): ParsedInformation
