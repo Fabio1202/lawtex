@@ -116,4 +116,6 @@ return [
 
     'admin_password' => env('ADMIN_PASSWORD'),
 
+    'registration_enabled' => env('REGISTRATION_ENABLED', true),
+
 ];
