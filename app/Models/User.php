@@ -58,5 +58,15 @@ class User extends Authenticatable
         return $this->hasMany(Project::class);
     }
 
+    public function roles(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->roles->contains('name', 'admin');
+    }
+
 
 }
