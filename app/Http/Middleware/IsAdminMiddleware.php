@@ -10,7 +10,7 @@ class IsAdminMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->user()->roles->contains('name', 'admin')) {
+        if (auth()->user()->isAdmin()) {
             return $next($request);
         }
         abort(401, 'Unauthorized');
