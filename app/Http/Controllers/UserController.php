@@ -13,4 +13,11 @@ class UserController extends Controller
             'users' => User::paginate(10)
         ]);
     }
+
+    public function show(User $user)
+    {
+        return view('users.show', [
+            'user' => $user
+        ]);
+    }
 }
