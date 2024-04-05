@@ -31,6 +31,13 @@ class UserController extends Controller
 
         $validated['admin'] = request()->has('admin');
 
+        if ($user->isAdmin() && User::whereHas('roles', function ($query) {
+                $query->where('name', 'admin');
+            })->count() === 1 && !$validated['admin'])
+        {
+            return back()->withErrors(['admin' => 'You cannot remove the admin role from the only admin user']);
+        }
+
         $user->name = $validated['name'];
         $user->email = $validated['email'];
 
@@ -47,6 +54,14 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
+        // Check if the user is the only admin
+        if ($user->isAdmin() && User::whereHas('roles', function ($query) {
+                    $query->where('name', 'admin');
+                })->count() === 1)
+        {
+            return back()->withErrors(['admin' => 'You cannot delete the only admin user']);
+        }
+
         $user->delete();
 
         return redirect(route('users.index'));
