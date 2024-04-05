@@ -13,6 +13,6 @@ class IsAdminMiddleware
         if (auth()->user()->isAdmin()) {
             return $next($request);
         }
-        abort(401, 'Unauthorized');
+        abort(403, 'Unauthorized');
     }
 }
