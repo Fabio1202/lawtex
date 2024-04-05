@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property mixed|string $project
+ */
 #[ScopedBy([OrderedBySlugScope::class])]
 class Law extends Model
 {

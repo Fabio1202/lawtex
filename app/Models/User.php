@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -13,7 +14,8 @@ use Illuminate\Notifications\Notifiable;
  */
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasUuids;
+    use HasFactory, HasUuids, Notifiable, SoftDeletes;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -35,6 +37,18 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function assignRole(string $string)
+    {
+        $role = Role::where('name', $string)->first();
+        $this->roles()->attach($role);
+    }
+
+    public function removeRole(string $string)
+    {
+        $role = Role::where('name', $string)->first();
+        $this->roles()->detach($role);
+    }
+
     /**
      * Get the attributes that should be cast.
      *
@@ -50,13 +64,19 @@ class User extends Authenticatable
 
     /**
      * Get all projects for the user.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function projects(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Project::class);
     }
 
+    public function roles(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Role::class);
+    }
 
+    public function isAdmin(): bool
+    {
+        return $this->roles->contains('name', 'admin');
+    }
 }

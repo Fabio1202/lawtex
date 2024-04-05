@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -22,6 +23,7 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
@@ -39,6 +41,36 @@ return new class extends Migration
             $table->integer('last_activity')->index();
         });
 
+        Schema::create('roles', function (Blueprint $table) {
+            // Should have uuid
+            $table->uuid('id')->primary();
+            $table->string('name');
+            $table->string('description')->nullable();
+            $table->timestamps();
+        });
+
+        Schema::create('role_user', function (Blueprint $table) {
+            $table->uuid('role_id');
+            $table->uuid('user_id');
+            $table->timestamps();
+
+            $table->primary(['role_id', 'user_id']);
+
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        });
+
+        // Create admin role
+        DB::table('roles')->insert([
+            'id' => Str::uuid(),
+            'name' => 'admin',
+            'description' => 'Administrator',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        $role = Role::where('name', 'admin')->first();
+
         // Create test user
         if (app()->environment('local')) {
             User::create([
@@ -46,7 +78,9 @@ return new class extends Migration
                 'name' => 'Testy McTestface',
                 'password' => \Illuminate\Support\Facades\Hash::make('test1234'),
                 'email_verified_at' => now(),
-            ]);
+            ])->roles()->attach($role);
+
+
         }
 
         // Create admin user for production
@@ -58,12 +92,15 @@ return new class extends Migration
                 echo "Admin password: $password\n";
             }
 
-            User::create([
+            $user = User::create([
                 'email' => config('auth.admin_email'),
                 'name' => 'Admin',
                 'password' => $password,
                 'email_verified_at' => now(),
             ]);
+
+            // Assign admin role to admin user
+            $user->roles()->attach($role);
         }
     }
 
@@ -75,5 +112,7 @@ return new class extends Migration
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
+        Schema::dropIfExists('role_user');
+        Schema::dropIfExists('roles');
     }
 };
