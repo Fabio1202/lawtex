@@ -22,7 +22,15 @@
                     @foreach($users as $user)
                         <a href="{{ route('users.show', $user) }}" class="project z-10 cursor-pointer flex-col gap-3 md:flex-row px-3 items-center justify-between flex w-full py-5 border-gray-200 dark:border-gray-700 transition-all hover:bg-gray-100 hover:dark:bg-gray-700 {{ $loop->last ? "" : "border-b-2" }}">
                             <span url="{{ route('users.show', $user) }}" class="flex items-center md:items-start flex-col justify-center" @click="window.location = $event.currentTarget.getAttribute('url')">
-                                <h1 class="text-lg font-bold">{{ $user->name }}</h1>
+                                <h1 class="text-lg font-bold flex items-center gap-1">
+                                    {{ $user->name }}
+                                    @if($user->isAdmin())
+                                        <span class="text-xs px-2 py-0.5 border-2 rounded-full dark:border-gray-600">
+                                            Admin
+                                            <i class="fa-solid fa-crown text-yellow-500"></i>
+                                        </span>
+                                    @endif
+                                </h1>
                                 <h2 class="text-sm">{{ $user->email }}</h2>
                             </span>
                         </a>
