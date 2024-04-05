@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\URL;
 
 // Redirect to the projects index view
 Route::get('/', function () {
@@ -36,7 +37,13 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::put('/{user}', [App\Http\Controllers\UserController::class, 'update'])->name('update');
         Route::delete('/{user}', [App\Http\Controllers\UserController::class, 'destroy'])->name('destroy');
         Route::post('/{user}/reset-password', [App\Http\Controllers\UserController::class, 'resetPassword'])->name('reset-password');
+        Route::post('/create-activation-link', [App\Http\Controllers\UserController::class, 'createActivationLink'])->name('create-activation-link');
     });
+});
+
+Route::middleware('signed')->group(function () {
+    Route::get('activate-account', [App\Http\Controllers\ActivateAccountController::class, 'index'])->name('activate-account.index');
+    Route::post('activate-account', [App\Http\Controllers\ActivateAccountController::class, 'store'])->name('activate-account.store');
 });
 
 if (app()->environment('local')) {
@@ -50,6 +57,10 @@ if (app()->environment('local')) {
         dump($law->project->toLatex());
         dd($parser->parseInformation($law->url));
     })->name('test');
+
+    Route::get('activate-account/get-link', function () {
+        return URL::signedRoute('activate-account.index', ['email' => 'test@test.com']);
+    });
 }
 
 require __DIR__.'/auth.php';

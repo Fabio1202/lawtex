@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\URL;
 
 class UserController extends Controller
 {
@@ -72,5 +73,17 @@ class UserController extends Controller
         );
 
         return back();
+    }
+
+    public function createActivationLink()
+    {
+        $email = request()->validate([
+            'email' => 'required|email',
+        ])['email'];
+
+        // Send the activation link as JSON
+        return response()->json([
+            'link' => URL::signedRoute('activate-account.index', ['email' => $email]),
+        ]);
     }
 }
