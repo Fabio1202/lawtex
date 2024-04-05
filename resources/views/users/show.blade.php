@@ -7,7 +7,27 @@
             </button>
         </a>
     </x-slot>
-    <span x-data="{showMode: true}">
+    <span x-data="{showMode: true, showDelete: false}">
+        <div class="transition-all fixed w-screen h-screen top-0 left-0 flex justify-center items-center text-black dark:text-white" x-show="showDelete" x-cloak>
+            <span class="bg-gray-900 opacity-40 absolute w-full h-full top-0 left-0" @click="showDelete = false;"></span>
+            <div class="justify-around sm:justify-start w-full sm:w-auto h-full sm:h-auto rounded-md bg-gray-100 shadow-lg dark:bg-gray-700 p-10 flex items-center flex-col gap-1 z-10">
+                <span class="flex flex-col items-center ">
+                    <span class="text-5xl text-red-500 -z-10"><i class="fa-solid fa-circle-exclamation"></i></span>
+                    <h1 class=" text-center text-4xl font-bold">Are you sure?</h1>
+                    <h1 class="text-center text-md ">{{ trans('Are you sure that you want to delete the user') }} <br>"{{ $user->name }}"</h1>
+                </span>
+                <form class="mt-7 flex flex-col gap-4 sm:flex-row justify-between w-full" method="POST" action="{{ route('users.destroy', $user) }}">
+                    @csrf
+                    @method('DELETE')
+                    <button type="button" @click="showDelete = false" before="{{ trans('Cancel') }}"
+                            class="before:content-[attr(before)] bg-white dark:bg-gray-600 rounded-md px-5 py-2 hover:bg-gray-200 hover:dark:bg-gray-500 w-full"></button>
+                    <button type="submit" before="{{ trans('Delete') }}"
+                            class="before:content-[attr(before)] text-white bg-red-500 rounded-md px-5 py-2 hover:bg-red-400 w-full"></button>
+                </form>
+            </div>
+        </div>
+
+
         <form method="post" action="{{ route('users.update', $user) }}">
             @CSRF
             @method('PUT')
@@ -24,6 +44,9 @@
                                 <button type="button" x-cloak x-show="!showMode" x-on:click="window.location = window.location" before="{{ __('Cancel Edit') }}"
                                         class="text-black before:content-[attr(before)] before:mr-2 bg-gray-200 dark:bg-gray-600 hover:dark:bg-gray-700 dark:text-white rounded-md px-5 py-2 hover:bg-gray-300">
                                     <i class="fa-solid fa-user-pen"></i></button>
+                                <button type="button" x-on:click="showDelete = true" before="{{ __('Delete') }}"
+                                        class="text-white before:content-[attr(before)] before:mr-2 bg-red-900 rounded-md px-5 py-2 hover:bg-red-800">
+                                    <i class="fa-solid fa-trash"></i></button>
                             </a>
                         </div>
                     </div>
@@ -53,7 +76,7 @@
                         <span class="w-full flex flex-row-reverse flex-wrap justify-end items-center mt-5">
                             <label for="admin" class="font-bold text-left text-md">Administrator</label>
                             <input name="admin" type="checkbox"
-                                   class="mr-3 h-5 w-5 text-blue-800 disabled:text-gray-500 dark:disabled:bg-gray-800 dark:bg-gray-600 rounded-md"
+                                   class="mr-3 h-5 w-5 text-blue-800 disabled:text-gray-500 dark:disabled:bg-gray-800 dark:bg-gray-600 rounded-md disabled:bg-white bg-gray-100"
                                    placeholder="https://example.com/bgb/115"
                                    {{ $user->isAdmin() ? 'checked' : '' }}
                                    x-bind:disabled="showMode"
