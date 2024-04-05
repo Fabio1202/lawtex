@@ -27,7 +27,9 @@
                             </span>
                         </a>
                     @endforeach
-                    <span class="block h-10"></span>
+                    @if($users->hasPages())
+                        <span class="block h-10"></span>
+                    @endif
                     {{ $users->links() }}
                 </div>
             </div>

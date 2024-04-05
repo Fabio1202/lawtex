@@ -35,6 +35,18 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function assignRole(string $string)
+    {
+        $role = Role::where('name', $string)->first();
+        $this->roles()->attach($role);
+    }
+
+    public function removeRole(string $string)
+    {
+        $role = Role::where('name', $string)->first();
+        $this->roles()->detach($role);
+    }
+
     /**
      * Get the attributes that should be cast.
      *

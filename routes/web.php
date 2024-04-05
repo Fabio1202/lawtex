@@ -30,9 +30,10 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::post('/{project}/laws', [App\Http\Controllers\LawController::class, 'store'])->name('laws.store');
     });
 
-    Route::prefix('users')->name('users.')->middleware(\App\Http\Middleware\IsAdminMiddleware::class)->group(function() {
-       Route::get('/', [App\Http\Controllers\UserController::class, 'index'])->name('index');
-       Route::get('/{user}', [App\Http\Controllers\UserController::class, 'show'])->name('show');
+    Route::prefix('users')->name('users.')->middleware(\App\Http\Middleware\IsAdminMiddleware::class)->group(function () {
+        Route::get('/', [App\Http\Controllers\UserController::class, 'index'])->name('index');
+        Route::get('/{user}', [App\Http\Controllers\UserController::class, 'show'])->name('show');
+        Route::put('/{user}', [App\Http\Controllers\UserController::class, 'update'])->name('update');
     });
 });
 
