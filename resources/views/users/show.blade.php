@@ -7,6 +7,22 @@
             </button>
         </a>
     </x-slot>
+    <script>
+        function sendPasswordReset() {
+            fetch('{{ route('users.reset-password', $user) }}', {
+                method: 'POST',
+                headers: {
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                }
+                }).then(response => {
+                    if (response.ok) {
+                        alert('Password reset email sent');
+                    } else {
+                        alert('An error occurred');
+                    }
+                });
+        }
+    </script>
     <span x-data="{showMode: true, showDelete: false}">
         <div class="transition-all fixed w-screen h-screen top-0 left-0 flex justify-center items-center text-black dark:text-white" x-show="showDelete" x-cloak>
             <span class="bg-gray-900 opacity-40 absolute w-full h-full top-0 left-0" @click="showDelete = false;"></span>
@@ -76,17 +92,16 @@
                         <span class="w-full flex flex-row-reverse flex-wrap justify-end items-center mt-5">
                             <label for="admin" class="font-bold text-left text-md">Administrator</label>
                             <input name="admin" type="checkbox"
-                                   class="mr-3 h-5 w-5 text-blue-800 disabled:text-gray-500 dark:disabled:bg-gray-800 dark:bg-gray-600 rounded-md disabled:bg-white bg-gray-100"
-                                   placeholder="https://example.com/bgb/115"
+                                   class="mr-3 h-5 w-5 text-blue-800 disabled:text-gray-500 dark:disabled:bg-gray-800 dark:bg-gray-600 rounded-md disabled:bg-white bg-gray-100 disabled:checked:bg-gray-400 "
                                    {{ $user->isAdmin() ? 'checked' : '' }}
                                    x-bind:disabled="showMode"
                             />
                             <x-input-error :messages="$errors->get('admin')" class="w-full mt-1"/>
                         </span>
 
-                        <button type="button" x-on:click="" before="{{ __('Reset password') }}"
-                                class="mt-8 text-gray-800 before:content-[attr(before)] before:mr-2 bg-gray-200 rounded-md px-5 py-2 hover:bg-gray-300 dark:bg-blue-900 dark:hover:bg-blue-800 dark:text-white">
-                                    <i class="fa-solid fa-lock"></i></button>
+                        <a href="javascript:sendPasswordReset()"><button type="button" x-on:click="" before="{{'Reset password' }}"
+                                class="mt-8 text-white before:content-[attr(before)] before:mr-2 bg-blue-900 rounded-md px-5 py-2 hover:bg-blue-800 dark:text-white">
+                                    <i class="fa-solid fa-lock"></i></button></a>
                     </div>
                 </div>
 

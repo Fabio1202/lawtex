@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Password;
 
 class UserController extends Controller
 {
@@ -49,5 +50,13 @@ class UserController extends Controller
         $user->delete();
 
         return redirect(route('users.index'));
+    }
+
+    public function resetPassword(User $user)
+    {
+        Password::sendResetLink(
+            $user->only('email')
+        );
+        return back();
     }
 }

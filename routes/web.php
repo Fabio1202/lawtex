@@ -35,6 +35,7 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::get('/{user}', [App\Http\Controllers\UserController::class, 'show'])->name('show');
         Route::put('/{user}', [App\Http\Controllers\UserController::class, 'update'])->name('update');
         Route::delete('/{user}', [App\Http\Controllers\UserController::class, 'destroy'])->name('destroy');
+        Route::post('/{user}/reset-password', [App\Http\Controllers\UserController::class, 'resetPassword'])->name('reset-password');
     });
 });
 
