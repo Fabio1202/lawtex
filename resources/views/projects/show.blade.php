@@ -7,7 +7,8 @@
             </button>
         </a>
     </x-slot>
-    <span x-data="{showCreate: {{ !empty($errors->get('create.url')) ? 'true' : 'false' }} }">
+    <span x-data="{showExport: false, showCreate: {{ !empty($errors->get('create.url')) ? 'true' : 'false' }} }">
+        <!-- Create Modal -->
         <div
             class="transition-all fixed w-screen h-screen top-0 left-0 flex justify-center items-center text-black dark:text-white"
             x-show="showCreate" x-cloak>
@@ -34,6 +35,31 @@
             </form>
         </div>
 
+        <!-- Export Modal -->
+        <div
+            class="transition-all fixed w-screen h-screen top-0 left-0 flex justify-center items-center text-black dark:text-white"
+            x-show="showExport" x-cloak>
+            <span class="bg-gray-900 opacity-40 absolute w-full h-full top-0 left-0"
+                  @click="showExport = false;"></span>
+            <div
+                class="justify-around sm:justify-start w-full sm:w-auto h-full sm:h-auto rounded-md bg-gray-100 shadow-lg dark:bg-gray-700 p-10 flex items-center flex-col gap-1 z-10"
+                >
+                    <span class="w-full flex flex-col items-center ">
+                        <h1 class=" text-center text-4xl font-bold sm:px-32">Export</h1>
+                        <label for="name" class="text-left w-full text-md mt-5">Magic link</label>
+                        <input name="url" required type="url"
+                               class="w-full h-10 rounded-md border-none bg-white dark:bg-gray-800"
+                               value="{{ \Illuminate\Support\Facades\URL::signedRoute('projects.latex', $project) }}"/>
+                    </span>
+                <div class="mt-7 flex flex-col gap-4 sm:flex-row justify-between w-full">
+                    <button type="button" @click="showExport=false" before="{{ trans('Cancel') }}"
+                            class="before:content-[attr(before)] bg-white dark:bg-gray-600 rounded-md px-5 py-2 hover:bg-gray-200 hover:dark:bg-gray-500 w-full"></button>
+                    <a class="block w-full" href="{{ \Illuminate\Support\Facades\URL::signedRoute('projects.latex', $project) }}"><button type="button" before="{{ trans('Download') }}"
+                            class="before:content-[attr(before)] px-5 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-400 w-full"></button></a>
+                </div>
+            </div>
+        </div>
+
 
         <div class="py-12 w-full px-2 sm:px-8">
             <div class="w-full px-8 py-8 bg-white dark:bg-gray-800 text-black dark:text-white rounded-md">
@@ -47,9 +73,9 @@
                         <button @click="showCreate = true" before="{{ trans('Add Law') }}"
                                 class="whitespace-nowrap text-white before:content-[attr(before)] before:mr-2 bg-blue-900 rounded-md px-5 py-2 hover:bg-blue-800">
                             <i class="fa-regular fa-plus"></i></button>
-                        {{--<button before="{{ trans('Export') }}"
+                        <button @click="showExport = true" before="{{ trans('Export') }}"
                                 class="text-white before:content-[attr(before)] before:mr-2 bg-blue-900 rounded-md px-5 py-2 hover:bg-blue-800">
-                            <i class="fa-solid fa-file-export"></i></button>--}}
+                            <i class="fa-solid fa-file-export"></i></button>
                     </div>
                 </div>
 
