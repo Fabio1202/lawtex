@@ -15,6 +15,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/{project}/latex.tex', [App\Http\Controllers\ProjectController::class, 'latex'])->name('projects.latex')->middleware('signed');
+
 Route::middleware('auth', 'verified')->group(function () {
     Route::prefix('projects')->group(function () {
         Route::get('/', [App\Http\Controllers\ProjectController::class, 'index'])->name('projects.index');
@@ -25,8 +27,6 @@ Route::middleware('auth', 'verified')->group(function () {
         //        Route::patch('/{project}', [App\Http\Controllers\ProjectController::class, 'update'])->name('projects.update');
         Route::delete('/{project}', [App\Http\Controllers\ProjectController::class, 'destroy'])->name('projects.destroy');
         Route::patch('/{project}/rename', [App\Http\Controllers\ProjectController::class, 'rename'])->name('projects.rename');
-
-        Route::get('/{project}/latex.tex', [App\Http\Controllers\ProjectController::class, 'latex'])->name('projects.latex');
 
         Route::post('/{project}/laws', [App\Http\Controllers\LawController::class, 'store'])->name('laws.store');
     });

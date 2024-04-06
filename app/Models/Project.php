@@ -35,6 +35,10 @@ class Project extends Model
      */
     public function toLatex(): string
     {
+        if($this->laws->isEmpty()) {
+            return '';
+        }
+
         $parser = new LawParser();
         $parsedLaws = $this->laws->map(function ($law) use ($parser) {
             return $parser->fullParse($law);
