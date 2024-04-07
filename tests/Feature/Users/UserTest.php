@@ -86,6 +86,32 @@ class UserTest extends TestCase
     }
 
     /**
+     * Test updating a admin user while keeping the admin role
+     */
+    public function test_updating_a_admin_user_while_keeping_the_admin_role(): void
+    {
+        // Migrate fresh
+        $this->artisan('migrate:fresh');
+
+        $user = $this->createAdminUser();
+
+        $response = $this->actingAs($this->createAdminUser())->put(route('users.update', $user), [
+            'name' => 'Test User',
+            'email' => 'testy@test.com',
+            'admin' => 'on',
+        ]);
+
+        $response->assertRedirect();
+        $response->assertSessionHasNoErrors();
+
+        $user->refresh();
+
+        $this->assertSame('Test User', $user->name);
+        $this->assertSame('testy@test.com', $user->email);
+        $this->assertTrue($user->isAdmin());
+    }
+
+    /**
      * Test updating a user without admin role
      */
     public function test_updating_a_user_without_admin_role(): void
