@@ -101,9 +101,13 @@
                                     <a target="_blank" href="{{ $law->url }}"><button
                                             class="text-white before:content-['Open'] before:mr-2 bg-blue-500 rounded-md px-2 py-1 hover:bg-blue-400"><i
                                                 class="fa-solid fa-link"></i></button></a>
-                                    <button @click=""
-                                            class="text-white before:content-['Delete'] before:mr-2 bg-red-500 rounded-md px-2 py-1 hover:bg-red-400"><i
-                                            class="fa-regular fa-trash-can"></i></button>
+                                    <form method="post" class="inline" action="{{ route('laws.destroy', ['project' => $project, 'law' => $law]) }}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                               class="text-white before:content-['Delete'] before:mr-2 bg-red-500 rounded-md px-2 py-1 hover:bg-red-400"><i
+                                                class="fa-regular fa-trash-can"></i></button>
+                                    </form>
                                 </span>
                             </span>
                             @endforeach
