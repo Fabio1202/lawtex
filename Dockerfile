@@ -32,7 +32,8 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install \
     pdo \
     pdo_pgsql \
-    zip
+    zip \
+    pdo_mysql
 
 COPY --from=composer /app/vendor /var/www/vendor
 COPY --from=node /app/public/build /var/www/public/build
