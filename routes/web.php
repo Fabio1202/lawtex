@@ -29,6 +29,7 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::patch('/{project}/rename', [App\Http\Controllers\ProjectController::class, 'rename'])->name('projects.rename');
 
         Route::post('/{project}/laws', [App\Http\Controllers\LawController::class, 'store'])->name('laws.store');
+        Route::delete('/{project}/laws/{law}', [App\Http\Controllers\LawController::class, 'destroy'])->name('laws.destroy');
     });
 
     Route::prefix('users')->name('users.')->middleware(\App\Http\Middleware\IsAdminMiddleware::class)->group(function () {

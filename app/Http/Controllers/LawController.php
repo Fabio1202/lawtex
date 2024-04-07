@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Law;
 use App\Models\Project;
 use App\Parsers\Base\LawParser;
 use App\Parsers\Base\ParserNotFoundException;
@@ -34,5 +35,14 @@ class LawController extends Controller
         }
 
         return back();
+    }
+
+public function destroy(Project $project, Law $law)
+    {
+        Gate::authorize('update', $project);
+
+        $law->delete();
+
+        return redirect(route('projects.show', $project));
     }
 }
