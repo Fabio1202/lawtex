@@ -40,7 +40,8 @@ class User extends Authenticatable
     public function assignRole(string $string)
     {
         $role = Role::where('name', $string)->first();
-        $this->roles()->attach($role);
+        $this->roles()->syncWithoutDetaching($role);
+
     }
 
     public function removeRole(string $string)
