@@ -29,11 +29,14 @@ RUN apt-get update && apt-get install -y \
     libpq-dev \
     libzip-dev \
     unzip \
+    libicu-dev \
+    && docker-php-ext-configure intl \
     && docker-php-ext-install \
     pdo \
     pdo_pgsql \
     zip \
-    pdo_mysql
+    pdo_mysql \
+    intl
 
 COPY --from=composer /app/vendor /var/www/vendor
 COPY --from=node /app/public/build /var/www/public/build
