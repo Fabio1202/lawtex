@@ -52,6 +52,10 @@ RUN chmod +x /usr/local/bin/start
 
 COPY --chown=www-data:www-data . /var/www
 
+VOLUME /var/www/env
+
+RUN ln -s /var/www/env/.env /var/www/.env
+
 # Expose port 80
 EXPOSE 80
 

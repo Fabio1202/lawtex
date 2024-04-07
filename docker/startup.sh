@@ -1,6 +1,7 @@
 #Check if key exists
-if [ ! -f "/var/www/.env" ]; then
-    cp /var/www/.env.prod.example /var/www/.env
+if [ ! -f "/var/www/env/.env" ]; then
+    echo "Creating .env file"
+    cp /var/www/.env.prod.example /var/www/env/.env
     php artisan key:generate
 fi
 
