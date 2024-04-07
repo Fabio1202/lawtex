@@ -43,6 +43,6 @@ public function destroy(Project $project, Law $law)
 
         $law->delete();
 
-        return back();
+        return redirect(route('projects.show', $project));
     }
 }

@@ -235,4 +235,89 @@ class ProjectTest extends TestCase
         $response->assertSee($law->name);
         $response->assertSee($law->slug);
     }
+
+    /**
+     * Test that laws can be removed from a project if the user owns the project.
+     */
+    public function test_law_can_be_removed_from_project(): void
+    {
+        // Migrate fresh to clear the database
+        $this->artisan('migrate:fresh');
+
+        $user = User::factory()->create();
+        $project = new Project();
+        $project->name = 'Test Project';
+        $project = $user->projects()->save($project);
+
+        $lawBook = new LawBook();
+        $lawBook->name = 'Test Law Book';
+        $lawBook->slug = 'hgb';
+        $lawBook->short = 'HGB';
+        $lawBook->prefix = '§';
+
+        $lawBook->save();
+
+        $law = new Law();
+        $law->name = 'Test Law';
+        $law->slug = '192';
+        $law->url = 'https://www.gesetze-im-internet.de/hgb/__192.html';
+        $law->lawBook()->associate($lawBook);
+
+        $project->laws()->save($law);
+
+        $response = $this->actingAs($user)->delete(route('laws.destroy', [$project, $law]));
+
+        $response->assertRedirect(route('projects.show', $project));
+        $this->assertDatabaseMissing('laws', [
+            'id' => $law->id,
+            'name' => 'Test Law',
+            'slug' => '192',
+            'url' => 'https://www.gesetze-im-internet.de/hgb/__192.html',
+            'law_book_id' => $lawBook->id,
+            'project_id' => $project->id,
+        ]);
+    }
+
+    /**
+     * Test that laws cannot be removed from a project if the user does not own the project.
+     */
+    public function test_law_cannot_be_removed_from_project_if_user_does_not_own_project(): void
+    {
+        // Migrate fresh to clear the database
+        $this->artisan('migrate:fresh');
+
+        $user = User::factory()->create();
+        $user2 = User::factory()->create();
+        $project = new Project();
+        $project->name = 'Test Project';
+        $project = $user->projects()->save($project);
+
+        $lawBook = new LawBook();
+        $lawBook->name = 'Test Law Book';
+        $lawBook->slug = 'hgb';
+        $lawBook->short = 'HGB';
+        $lawBook->prefix = '§';
+
+        $lawBook->save();
+
+        $law = new Law();
+        $law->name = 'Test Law';
+        $law->slug = '192';
+        $law->url = 'https://www.gesetze-im-internet.de/hgb/__192.html';
+        $law->lawBook()->associate($lawBook);
+
+        $project->laws()->save($law);
+
+        $response = $this->actingAs($user2)->delete(route('laws.destroy', [$project, $law]));
+
+        $response->assertStatus(403);
+        $this->assertDatabaseHas('laws', [
+            'id' => $law->id,
+            'name' => 'Test Law',
+            'slug' => '192',
+            'url' => 'https://www.gesetze-im-internet.de/hgb/__192.html',
+            'law_book_id' => $lawBook->id,
+            'project_id' => $project->id,
+        ]);
+    }
 }
