@@ -30,6 +30,8 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     unzip \
     libicu-dev \
+    nginx \
+    cron \
     && docker-php-ext-configure intl \
     && docker-php-ext-install \
     pdo \
@@ -43,9 +45,6 @@ COPY --from=node /app/public/build /var/www/public/build
 
 WORKDIR /var/www
 
-# Install nginx
-RUN apt-get update && apt-get install -y nginx
-
 # Copy nginx configuration
 COPY docker/nginx.conf /etc/nginx/sites-available/default
 
@@ -58,6 +57,9 @@ COPY --chown=www-data:www-data . /var/www
 VOLUME /var/www/env
 
 RUN ln -s /var/www/env/.env /var/www/.env
+
+#Cronjob for laravel
+RUN (crontab -l ; echo "* * * * * cd /var/www && php artisan schedule:run >> /dev/null 2>&1") | crontab
 
 # Expose port 80
 EXPOSE 80
