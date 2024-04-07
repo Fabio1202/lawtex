@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Parsers\Base\LawParser;
+use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -21,8 +22,10 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
+    public function boot(UrlGenerator $url): void
     {
-        //
+        if (config('app.force_https')) {
+            $url->forceScheme('https');
+        }
     }
 }
