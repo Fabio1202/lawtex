@@ -17,3 +17,4 @@ jobs:
         name: Spellcheck
         with:
           source_files: 'docs/**/*.md'
+          task_name: 'Spellcheck docs'

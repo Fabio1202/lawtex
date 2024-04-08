@@ -18,6 +18,7 @@ If you want to add a new parser, you can do so by creating a new parser class in
 
 Here is an example of a parser class:
 
+
 ```php
 namespace App\Parsers;
 
