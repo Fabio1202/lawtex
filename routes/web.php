@@ -50,7 +50,7 @@ Route::middleware('signed')->group(function () {
 if (app()->environment('local')) {
     Route::get('test', function () {
         $law = \App\Models\Law::first();
-        $law->url = 'https://www.gesetze-im-internet.de/bgb/__311.html#:~:text=§%20311%20Rechtsgeschäftliche%20und%20rechtsgeschäftsähnliche,das%20Gesetz%20ein%20anderes%20vorschreibt.';
+        $law->url = 'https://dsgvo-gesetz.de/erwaegungsgruende/nr-13/';
         $parser = new \App\Parsers\Base\LawParser();
         $parsed = $parser->fullParse($law);
         dump($parsed);
