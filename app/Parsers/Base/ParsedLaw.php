@@ -45,7 +45,14 @@ class ParsedLaw
     public function toLatex(): string
     {
         $str = '\noindent\fbox{\begin{minipage}{\textwidth}\vspace{0.5em}';
-        $str .= '{\centering \textbf{\LARGE ' . $this->lawBookTitle . ' (' . $this->lawBookShort . ')} \\\\[.5em] \textbf{\LARGE ' . $this->prefix . ' ' . $this->section . ' ' . $this->title . '} \par}';
+        $str .= '{' .
+            '\begin{spacing}{1.5}' .
+            '\centering ' .
+            '\textbf{\LARGE ' . $this->lawBookTitle . ' (' . $this->lawBookShort . ')} ' .
+            '\\\\[.75em] \textbf{\LARGE ' . $this->prefix . ' ' . $this->section . ' ' . $this->title . '} ' .
+            '\par' .
+            '\end{spacing}' .
+            '}';
         $str .= '';
         if(count($this->paragraphs) > 1) {
             $str .= '\vspace{0.5em}\begin{enumerate}';
