@@ -1,9 +1,6 @@
 name: Documentation spell check
 on:
-  pull_request:
-    branches: ['main']
-    paths:
-      - 'docs/**'
+  workflow_dispatch:
 
 
 jobs:
