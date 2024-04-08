@@ -1,0 +1,33 @@
+###
+### Example for a docker-compose.yml file for a lawtex deployment
+###
+
+version: "3.8"
+
+services:
+    app:
+        image: "fabioboi/lawtex:latest"
+        environment:
+            - "ADMIN_EMAIL=<YOUR-EMAIL>" # Email for the admin user
+            - "ADMIN_PASSWORD=<YOUR-PASSWORD>" # optional, Password for the admin user. If not set, a random password will be generated and printed to the console on the first start.
+
+            - "APP_URL='<YOUR-APP-URL>'" # URL of the app
+            - "ASSET_URL=<YOUR-APP-URL>>" # Should be the same as APP_UR
+
+            - "DB_CONNECTION=<YOUR-DB-CONN>" # Database connetion type (mysql, sqlite, ...)
+            - "DB_HOST=<YOUR-DB-HOST>" # Hostname or IP of the database
+            - "DB_PORT=3306" # Port of the database
+            - "DB_DATABASE=<YOUR-DB-NAME>" # Name of the database
+            - "DB_USERNAME=<YOUR-DB-USER>" # Username for the database
+            - "DB_PASSWORD=<YOUR-DB-PW>" # Password for the database
+
+            - "REGISTRATION_ENABLED=true" # optional, Whether registration should be possible (default: true)
+            - "FORCE_HTTPS=true" # optional, if your app is behind a reverse proxy, set this to true (default: false)
+
+            - "ENLIGHTN_RUN_ON_PRODUCTION=false" # (since v0.2) optional, if you want to use Enlightn, set this to true (default: false)
+            - "ENLIGHTN_USERNAME=<YOUR-ENLIGHTN-USER>" # (since v0.2) optional, your Enlightn username if you want to use Enlightn and save the results on your UI
+            - "ENLIGHTN_API_TOKEN=<YOUR-ENLIGHTN-PROJECT-KEY>" # (since v0.2) optional, your Enlightn project key if you want to use Enlightn and save the results on your UI
+        volumes:
+            - "<YOUR-VOLUME-PATH>:/var/www/env" # Path to the volume for the .env file to persist the encryption key.
+        ports:
+            - "80:80" # Port for the app
