@@ -183,4 +183,6 @@ return [
         '--no-progress' => true,
         '--memory-limit' => ini_get('memory_limit'),
     ],
+
+    'run_on_production' => env('ENLIGHTN_RUN_ON_PRODUCTION', false),
 ];
