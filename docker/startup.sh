@@ -8,6 +8,8 @@ fi
 php artisan migrate --force
 php artisan optimize
 
+php artisan prod:enlightn
+
 chown -R www-data:www-data /var/www/
 
 #Startup fpm
