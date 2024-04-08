@@ -1,6 +1,6 @@
 <p align="center">
-<img src="https://raw.githubusercontent.com/Fabio1202/lawtex/main/public/images/logo-no-background.svg?token=GHSAT0AAAAAACP7TOYGE7CKIZCS6YO2E2T2ZQSYFTA#gh-dark-mode-only" width=500/>
-<img src="https://raw.githubusercontent.com/Fabio1202/lawtex/main/public/images/logo-black.svg?token=GHSAT0AAAAAACP7TOYGW74QYXVBHHVM3CCAZQSYDMA#gh-light-mode-only" width=500/>
+<img src="https://raw.githubusercontent.com/Fabio1202/lawtex/main/public/images/logo-no-background.svg#gh-dark-mode-only" width=500/>
+<img src="https://raw.githubusercontent.com/Fabio1202/lawtex/main/public/images/logo-black.svg#gh-light-mode-only" width=500/>
 </p>
 
 # lawtex
