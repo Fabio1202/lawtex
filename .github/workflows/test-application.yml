@@ -3,8 +3,14 @@ name: Laravel
 on:
   push:
     branches: [ "main" ]
+    # Exclude /docs folder from triggering the workflow
+    paths-ignore:
+      - 'docs/**'
   pull_request:
     branches: [ "main" ]
+    # Exclude /docs folder from triggering the workflow
+    paths-ignore:
+      - 'docs/**'
 
 jobs:
   laravel-tests:
