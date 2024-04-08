@@ -67,7 +67,11 @@ class ParsedLaw
         }
         $str .= '\end{minipage}}';
 
-        return $str;
+        // replace html special chars such as &nbsp; with latex commands
+        $str = str_replace('&nbsp;', '~', $str);
+
+        // replace & with \& and return
+        return str_replace('&', '\&', $str);
     }
 
     public function getParagraphs(): array

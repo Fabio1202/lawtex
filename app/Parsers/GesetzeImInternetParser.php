@@ -3,6 +3,7 @@
 namespace App\Parsers;
 
 use App\Models\Law;
+use App\Parsers\Base\FullLawParseFromLaw;
 use App\Parsers\Base\ParsedInformation;
 use App\Parsers\Base\ParsedLaw;
 use App\Parsers\Base\ParserInterface;
@@ -10,18 +11,10 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class GesetzeImInternetParser implements ParserInterface
 {
+    use FullLawParseFromLaw;
+
     public function fullParse(Law $law, Crawler $crawler): ParsedLaw
     {
-        $lawBookSlug = $law->lawBook->slug;
-        $lawBookShort = $law->lawBook->short;
-        $lawBookTitle = $law->lawBook->name;
-        $prefix = $law->lawBook->prefix;
-
-        $title = $law->name;
-        $section = $law->slug;
-
-        $url = $law->url;
-
         $paragraphs = [];
 
         $crawler->filter('div.jurAbsatz')->each(function (Crawler $node) use (&$paragraphs) {
@@ -36,7 +29,7 @@ class GesetzeImInternetParser implements ParserInterface
             $paragraphs[] = preg_replace('/^\([0-9]*\) /', '', $txt);
         });
 
-        return new ParsedLaw($section, $title, $paragraphs, $url, $lawBookSlug, $lawBookShort,$lawBookTitle, $prefix);
+        return $this->autoFullParse($law, $paragraphs);
     }
 
     public function parseInformation(Crawler $crawler): ParsedInformation
