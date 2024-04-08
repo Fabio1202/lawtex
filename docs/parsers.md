@@ -1,5 +1,4 @@
-# Parsers <span style="display:block; opacity: .8; font-size: 1rem;">App\Parsers</span>
-<!-- Subtitle -->
+# Parsers
 
 <br>
 This page demonstrates how to create a parser for a new website and how to register it in the application. It also explains the classes and interfaces that are used to parse laws.
@@ -7,14 +6,11 @@ This page demonstrates how to create a parser for a new website and how to regis
 ## Available Parsers
 
 <!-- Table of currently available parsers -->
-| Parser                         | URL                                                      | Supported law books             |
-|--------------------------------|----------------------------------------------------------|---------------------------------|
-| `App/Parsers/DSGVOGesetz`      | [dsgvo-gesetz.de](https://dsgvo-gesetz.de)               | DSGVO <br> BDSG <br> DSGVO-ErwG |               
-| `App/Parsers/GestzeImInternet` | [gesetze-im-internet.de](https://gesetze-im-internet.de) | All available law books         |
+<!--@include: .components/available_parsers.md-->
 
 ## Create a parser
 
-If you want to add a new parser, you can do so by creating a new parser class in the `App/Parsers` namespace. The class must implement the `ParserInterface` interface. The parser class should be named after the law book it is parsing.
+If you want to add a new parser, you can do so by creating a new parser class in the `App/Parsers` namespace. The class must implement the `ParserInterface` interface. The parser class should be named after the website it is parsing.
 
 Here is an example of a parser class:
 
@@ -49,7 +45,7 @@ The `parseInformation` method should return a [`ParsedInformation`](#parsedinfor
 
 To register a parser, you need to add it to the `parsers` array in the `config/parsers.php` file. The key should be the domain of the website, and the value should be the fully qualified class name of the parser.
 
-```php
+```php {4}
 return [
     'dsgvo-gesetz.de' => App\Parsers\DSGVOGesetz::class,
     'gesetze-im-internet.de' => App\Parsers\GesetzeImInternet::class,
@@ -57,29 +53,31 @@ return [
 ];
 ```
 
+::: info Hurrah!
 :partying_face: Congratulations! You have successfully created a parser for a new website. You can now parse laws from the website using the `LawParser` class.
+:::
 
 ## Other classes
 
 ### FullLawParseFromLaw
 
-Most laws are structured similiar and the information was already retreived in the `parseInformation` method. To automate most of the parsing process, you can use the `FullLawParseFromLaw` trait. You only need to parse the paragraphs of the law. Here is an example of a parser class using the `FullLawParseFromLaw` trait:
+Most laws are structured similiar and the information was already retreived in the `parseInformation` method. To automate most of the parsing process, you can use the `FullLawParseFromLaw` trait. You only need to parse the paragraphs of the law. Here is an example of a extended parser class using the `FullLawParseFromLaw` trait:
 
 ```php
 namespace App\Parsers;
 
 use App\Parsers\Base\ParserInterface;
-use App\Parsers\Base\FullLawParseFromLaw;
+use App\Parsers\Base\FullLawParseFromLaw; // [!code focus]
 
 class MyParser implements ParserInterface
 {
-    use FullLawParseFromLaw;
+    use FullLawParseFromLaw; // [!code focus]
 
     public function fullParse(Law $law, Crawler $crawler): ParsedLaw
     {
         $paragraphs = [] // TODO: Parse the paragraphs of the law
         
-        return $this->autoFullParse($law, $paragraphs);
+        return $this->autoFullParse($law, $paragraphs); // [!code focus]
     }
 
     public function parseInformation(Crawler $crawler): ParsedInformation
