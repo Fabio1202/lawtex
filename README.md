@@ -16,8 +16,8 @@ The app is dockerized with each release and includes a nginx server running the 
 
 We currently support only german law texts. The following sources are supported:
 
-- [x] [gesetze-im-internet.de](https://www.gesetze-im-internet.de)
-- [x] [dsgvo-gesetz.de](https://dsgvo-gesetz.de)
+- [x] [gesetze-im-internet.de](https://www.gesetze-im-internet.de) (v0.1)
+- [x] [dsgvo-gesetz.de](https://dsgvo-gesetz.de) (v0.2)
 
 If you want to add a new parser, please open an issue or submit a pull request.
 
