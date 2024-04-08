@@ -56,6 +56,7 @@ class Project extends Model
 
         $latex = '
             \usepackage{xifthen}
+            \usepackage{setspace}
             \usepackage{enumitem}
             \newcommand{\ifequals}[3]{\ifthenelse{\equal{#1}{#2}}{#3}{}}
             \newcommand{\case}[2]{#1 #2}
