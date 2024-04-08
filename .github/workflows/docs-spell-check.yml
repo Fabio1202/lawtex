@@ -16,6 +16,7 @@ jobs:
       - uses: rojopolis/spellcheck-github-actions@v0
         name: Spellcheck
         with:
+          config_path: .github/spellcheck/spellcheck.yml
           source_files: 'docs/**/*.md'
           task_name: Markdown
           output_file: spellcheck-output.txt
