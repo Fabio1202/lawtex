@@ -12,21 +12,39 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Guide', link: '/introduction' }
+      { text: 'Guide', link: '/introduction/welcome' }
     ],
 
     sidebar: [
         {
             text: 'Introduction',
             items: [
-                { text: 'Parsers', link: '/parsers' },
-                { text: 'Parsers', link: '/parsers' },
-                { text: 'Parsers', link: '/parsers' },
+                { text: 'Welcome!', link: '/introduction/welcome' },
+                { text: 'Run lawtex', link: '/introduction/run-lawtex' },
+                { text: 'Environment variables', link: '/introduction/environment' },
+                { text: 'Volumes', link: '/parsers' },
+            ]
+        },
+        {
+            text: 'Web App',
+            items: [
+                { text: 'Create Project', link: '/parsers' },
+                { text: 'Add Laws', link: '/parsers' },
+                { text: 'Export Project', link: '/parsers' },
+            ]
+        },
+        {
+            text: 'LaTeX',
+            items: [
+                { text: 'Show Law', link: '/parsers' },
+                { text: 'Table of laws', link: '/parsers' },
             ]
         },
         {
             text: 'Development',
+            collapsed: false,
             items: [
+                { text: 'Dev Environment', link: '/parsers' },
                 { text: 'Parsers', link: '/parsers' },
             ]
         }
