@@ -25,7 +25,7 @@ On the first start of the application, an admin user is created. You can set the
 
 If you do not set the `ADMIN_PASSWORD` variable, a random password is generated.
 
-::: warning Remember the password
+::: warning Remember the password!
 If no `ADMIN_PASSWORD` is set, the password is generated randomly and only displayed once in the logs. Make sure to save the password.
 :::
 

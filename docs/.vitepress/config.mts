@@ -3,7 +3,7 @@ import { defineConfig } from 'vitepress'
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   srcExclude: ['**/available_parsers.md'],
-  title: "lawtex",
+  title: " ",
   description: "This is the documentation for lawtex",
   themeConfig: {
     search: {
@@ -14,6 +14,16 @@ export default defineConfig({
       { text: 'Home', link: '/' },
       { text: 'Guide', link: '/introduction/welcome' }
     ],
+
+      editLink: {
+          pattern: 'https://github.com/fabio1202/lawtex/edit/main/docs/:path'
+      },
+
+      logo: {
+        light: '/logo-black.svg',
+        dark: '/logo-no-background.svg'
+      },
+
 
     sidebar: [
         {
