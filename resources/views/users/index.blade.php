@@ -5,37 +5,11 @@
         </h2>
     </x-slot>
 
-    <script>
-        function getActivationLink() {
-            let email = document.getElementById('create-user-email').value;
-            let url = "{{ route('users.create-activation-link') }}";
-            let data = new FormData();
-            data.append('email', email);
-            fetch(url, {
-                method: 'POST',
-                body: data,
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                }
-            }).then(response => response.json())
-                .then(data => {
-                    if (data.link !== null) {
-                        document.getElementById('create-user-activation-link').value = data.link;
-                        document.getElementById('create-user-form').classList.add('hidden');
-                        document.getElementById('user-created').classList.add('flex');
-                        document.getElementById('user-created').classList.remove('hidden');
-                    } else {
-                        alert('An error occurred while creating the activation link');
-                    }
-                });
-        }
-    </script>
-
     <span x-data="{showCreate: false}">
         <!-- Create User PopUp -->
         <div class="transition-all fixed w-screen h-screen top-0 left-0 flex justify-center items-center text-black dark:text-white" x-show="showCreate" x-cloak>
             <span class="bg-gray-900 opacity-40 absolute w-full h-full top-0 left-0" @click="showCreate = false;"></span>
-            <form id="create-user-form" class="justify-around sm:justify-start w-full sm:w-auto h-full sm:h-auto rounded-md bg-gray-100 shadow-lg dark:bg-gray-700 p-10 flex items-center flex-col gap-1 z-10"  action="javascript:getActivationLink()">
+            <form id="create-user-form" class="justify-around sm:justify-start w-full sm:w-auto h-full sm:h-auto rounded-md bg-gray-100 shadow-lg dark:bg-gray-700 p-10 flex items-center flex-col gap-1 z-10">
                 <span class="flex flex-col items-center w-full">
                     <h1 class=" text-center text-4xl font-bold sm:px-16">New User</h1>
                     <label for="email" class="text-left w-full text-md mt-5">E-Mail</label>
@@ -100,4 +74,37 @@
             </div>
         </div>
     </span>
+
+    <script nonce="{{ \App\Http\NonceManager::generateNonce() }}">
+        function getActivationLink() {
+            let email = document.getElementById('create-user-email').value;
+            let url = "{{ route('users.create-activation-link') }}";
+            let data = new FormData();
+            data.append('email', email);
+            fetch(url, {
+                method: 'POST',
+                body: data,
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                }
+            }).then(response => response.json())
+                .then(data => {
+                    if (data.link !== null) {
+                        document.getElementById('create-user-activation-link').value = data.link;
+                        document.getElementById('create-user-form').classList.add('hidden');
+                        document.getElementById('user-created').classList.add('flex');
+                        document.getElementById('user-created').classList.remove('hidden');
+                    } else {
+                        alert('An error occurred while creating the activation link');
+                    }
+                });
+        }
+
+        let createUserForm = document.getElementById('create-user-form');
+
+        createUserForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            getActivationLink();
+        });
+    </script>
 </x-app-layout>

@@ -13,6 +13,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         // Trusted proxies...
         $middleware->trustProxies(at: '*');
+        $middleware->web(\App\Http\Middleware\AddCSPHeadersMiddleware::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
