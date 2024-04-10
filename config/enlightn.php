@@ -94,6 +94,7 @@ return [
         \Enlightn\Enlightn\Analyzers\Reliability\DeprecatedCodeAnalyzer::class,
         \Enlightn\Enlightn\Analyzers\Security\StableDependencyAnalyzer::class,
         \Enlightn\Enlightn\Analyzers\Performance\UnusedGlobalMiddlewareAnalyzer::class,
+        \Enlightn\Enlightn\Analyzers\Security\XSSAnalyzer::class,
     ],
 
     /*
