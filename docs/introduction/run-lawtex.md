@@ -1,4 +1,4 @@
-# Run the application
+# Quick Start
 
 The application can be run in a docker container. The image can be found on [Docker Hub](https://hub.docker.com/r/fabioboi/lawtex).
 

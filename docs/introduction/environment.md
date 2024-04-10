@@ -40,6 +40,11 @@ You can set the following environment variables to configure the URL of the appl
 **Optional**
 - `APP_PORT`: The port of the application (default: `80`)
 - `FORCE_HTTPS`: If set to `true`, the application will redirect all requests to HTTPS (default: `false`)
+- `APP_DEBUG`: If set to `true`, the application will show debug information (default: `false`)
+
+::: danger `APP_DEBUG` in production
+You should never set `APP_DEBUG` to `true` in production environments. This could expose sensitive information and could make your application vulnerable for attacks.
+:::
 
 ## Registration
 
@@ -62,7 +67,7 @@ You can set the following environment variables to configure the database connec
 - `DB_USERNAME`: The username for the database
 - `DB_PASSWORD`: The password for the database
 
-## Enlightn
+## Enlightn <Badge type="tip" text="^v0.2" />
 
 Enlightn is a package that helps you to improve the security and performance of your Laravel application. You can set the following environment variables to configure Enlightn:
 
