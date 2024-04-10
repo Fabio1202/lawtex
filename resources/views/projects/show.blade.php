@@ -10,12 +10,12 @@
     <span x-data="{showExport: false, showCreate: {{ !empty($errors->get('create.url')) ? 'true' : 'false' }} }">
         <!-- Create Modal -->
         <div
-            class="transition-all fixed w-screen h-screen top-0 left-0 flex justify-center items-center text-black dark:text-white"
+            class="transition-all fixed w-screen h-screen top-0 left-0 flex justify-center items-center text-black dark:text-white z-20"
             x-show="showCreate" x-cloak>
             <span class="bg-gray-900 opacity-40 absolute w-full h-full top-0 left-0"
                   @click="showCreate = false;"></span>
             <form
-                class="justify-around sm:justify-start w-full sm:w-auto h-full sm:h-auto rounded-md bg-gray-100 shadow-lg dark:bg-gray-700 p-10 flex items-center flex-col gap-1 z-10"
+                class="z-20 justify-around sm:justify-start w-full sm:w-auto h-full sm:h-auto rounded-md bg-gray-100 shadow-lg dark:bg-gray-700 p-10 flex items-center flex-col gap-1"
                 method="POST" action="{{ route('laws.store', $project) }}">
                     <span class="w-full flex flex-col items-center ">
                         <h1 class=" text-center text-4xl font-bold sm:px-32">New Law</h1>
@@ -42,7 +42,7 @@
             <span class="bg-gray-900 opacity-40 absolute w-full h-full top-0 left-0"
                   @click="showExport = false;"></span>
             <div
-                class="justify-around sm:justify-start w-full sm:w-auto h-full sm:h-auto rounded-md bg-gray-100 shadow-lg dark:bg-gray-700 p-10 flex items-center flex-col gap-1 z-10"
+                class="justify-around sm:justify-start w-full sm:w-auto h-full sm:h-auto rounded-md bg-gray-100 shadow-lg dark:bg-gray-700 p-10 flex items-center flex-col gap-1 z-20"
                 >
                     <span class="w-full flex flex-col items-center ">
                         <h1 class=" text-center text-4xl font-bold sm:px-32">Export</h1>

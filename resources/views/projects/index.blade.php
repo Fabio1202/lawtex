@@ -6,7 +6,7 @@
     </x-slot>
     <span x-data="{ showDelete: false, showCreate:false, item: null, showRename: false, showDeletePopUp(selItem) {this.item = selItem; this.showDelete = true}, showRenamePopup(selItem) {this.item = selItem; this.showRename = true}}">
 
-        <div class="transition-all fixed w-screen h-screen top-0 left-0 flex justify-center items-center text-black dark:text-white" x-show="showDelete" x-cloak>
+        <div class="transition-all fixed w-screen z-10 h-screen top-0 left-0 flex justify-center items-center text-black dark:text-white" x-show="showDelete" x-cloak>
             <span class="bg-gray-900 opacity-40 absolute w-full h-full top-0 left-0" @click="showDelete = false;"></span>
             <div class="justify-around sm:justify-start w-full sm:w-auto h-full sm:h-auto rounded-md bg-gray-100 shadow-lg dark:bg-gray-700 p-10 flex items-center flex-col gap-1 z-10">
                 <span class="flex flex-col items-center ">
@@ -25,7 +25,7 @@
             </div>
         </div>
 
-        <div class="transition-all fixed w-screen h-screen top-0 left-0 flex justify-center items-center text-black dark:text-white" x-show="showCreate" x-cloak>
+        <div class="transition-all fixed w-screen h-screen top-0 left-0 flex justify-center items-center text-black dark:text-white z-10" x-show="showCreate" x-cloak>
             <span class="bg-gray-900 opacity-40 absolute w-full h-full top-0 left-0" @click="showCreate = false;"></span>
             <form class="justify-around sm:justify-start w-full sm:w-auto h-full sm:h-auto rounded-md bg-gray-100 shadow-lg dark:bg-gray-700 p-10 flex items-center flex-col gap-1 z-10"  method="POST" action="">
                 <span class="flex flex-col items-center w-full">
@@ -43,9 +43,9 @@
             </form>
         </div>
 
-        <div class="transition-all fixed w-screen h-screen top-0 left-0 flex justify-center items-center text-black dark:text-white" x-show="showRename" x-cloak>
+        <div class="transition-all fixed w-screen h-screen top-0 left-0 flex justify-center items-center text-black dark:text-white z-10" x-show="showRename" x-cloak>
             <span class="bg-gray-900 opacity-40 absolute w-full h-full top-0 left-0" @click="showRename = false;"></span>
-            <form class="justify-around sm:justify-start w-full sm:w-auto h-full sm:h-auto rounded-md bg-gray-100 shadow-lg dark:bg-gray-700 p-10 flex items-center flex-col gap-1 z-10"  method="POST" x-bind:action="'/projects/' + (item?.id ?? '') + '/rename'">
+            <form class="justify-around sm:justify-start w-full sm:w-auto h-full sm:h-auto rounded-md bg-gray-100 shadow-lg dark:bg-gray-700 p-10 flex items-center flex-col gap-1 z-0"  method="POST" x-bind:action="'/projects/' + (item?.id ?? '') + '/rename'">
                 <span class="flex flex-col items-center ">
                     <h1 class=" text-center text-4xl font-bold sm:px-16">Rename Project</h1>
                     <label for="name" class="text-left w-full text-md mt-5">Project Name</label>
