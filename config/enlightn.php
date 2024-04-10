@@ -109,8 +109,8 @@ return [
     */
     'ignore_errors' => [
         \Enlightn\Enlightn\Analyzers\Performance\UnusedGlobalMiddlewareAnalyzer::class => [
-            'path' => '*app/Http/Kernel.php',
-            'details' => '*TrustProxies*'
+            'path' => 'bootstrap/app.php',
+            'details' => '*TrustProxies*',
         ],
     ],
 
@@ -196,4 +196,12 @@ return [
     ],
 
     'run_on_production' => env('ENLIGHTN_RUN_ON_PRODUCTION', false),
+
+    'dont_run_on_production' => [
+        \Enlightn\Enlightn\Analyzers\Reliability\ComposerValidationAnalyzer::class,
+        \Enlightn\Enlightn\Analyzers\Performance\MinificationAnalyzer::class,
+        \Enlightn\Enlightn\Analyzers\Reliability\CustomErrorPageAnalyzer::class,
+        \Enlightn\Enlightn\Analyzers\Security\UpToDateDependencyAnalyzer::class,
+        \Enlightn\Enlightn\Analyzers\Reliability\EnvExampleAnalyzer::class,
+    ],
 ];

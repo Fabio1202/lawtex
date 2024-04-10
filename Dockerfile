@@ -38,10 +38,14 @@ RUN apt-get update && apt-get install -y \
     pdo_pgsql \
     zip \
     pdo_mysql \
-    intl
+    intl \
+    opcache
 
 COPY --from=composer /app/vendor /var/www/vendor
 COPY --from=node /app/public/build /var/www/public/build
+
+# Copy php.ini security file
+COPY docker/secure-php.ini /usr/local/etc/php/conf.d/secure-php.ini
 
 WORKDIR /var/www
 

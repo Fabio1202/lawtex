@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #Check if key exists
 if [ ! -f "/var/www/env/.env" ]; then
     echo "Creating .env file"
@@ -8,12 +10,15 @@ fi
 php artisan migrate --force
 php artisan optimize
 
-php artisan prod:enlightn
-
 chown -R www-data:www-data /var/www/
 
 #Startup fpm
 php-fpm -D
 
 #Startup nginx
-nginx -g 'daemon off;'
+nginx
+
+php artisan prod:enlightn
+
+#Keep container running
+tail -f /dev/null
