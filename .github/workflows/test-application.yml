@@ -42,8 +42,6 @@ jobs:
       env:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
-        ENLIGHTN_USERNAME: ${{ secrets.ENLIGHTN_USERNAME }}
-        ENLIGHTN_API_TOKEN: ${{ secrets.ENLIGHTN_API_TOKEN }}
         ENLIGHTN_GITHUB_REPO: ${{ github.repository }}
       run: |
         cp .env.example .env
