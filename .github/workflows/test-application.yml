@@ -45,5 +45,5 @@ jobs:
         ENLIGHTN_GITHUB_REPO: ${{ github.repository }}
       run: |
         cp .env.example .env
-        php artisan enlightn --ci --report --review --issue=${{ github.event.number }}
+        php artisan enlightn --ci --review --issue=${{ github.event.number }}
 
