@@ -3,8 +3,24 @@ name: Laravel
 on:
   push:
     branches: [ "main" ]
+    paths-ignore:
+      - 'docs/**'
   pull_request:
     branches: [ "main" ]
+    paths:
+        - 'app/**'
+        - 'config/**'
+        - 'database/**'
+        - 'public/**'
+        - 'resources/**'
+        - 'routes/**'
+        - 'tests/**'
+        - 'composer.json'
+        - 'composer.lock'
+        - 'package.json'
+        - 'webpack.mix.js'
+        - 'phpunit.xml'
+        - '.env.example'
 
 jobs:
   laravel-tests:
