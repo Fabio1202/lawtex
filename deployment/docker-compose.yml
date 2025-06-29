@@ -12,7 +12,7 @@ services:
             - "ADMIN_PASSWORD=<YOUR-PASSWORD>" # optional, Password for the admin user. If not set, a random password will be generated and printed to the console on the first start.
 
             - "APP_URL='<YOUR-APP-URL>'" # URL of the app
-            - "ASSET_URL=<YOUR-APP-URL>>" # Should be the same as APP_UR
+            - "ASSET_URL=<YOUR-APP-URL>" # Should be the same as APP_UR
 
             - "DB_CONNECTION=<YOUR-DB-CONN>" # Database connetion type (mysql, sqlite, ...)
             - "DB_HOST=<YOUR-DB-HOST>" # Hostname or IP of the database
